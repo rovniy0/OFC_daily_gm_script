@@ -5,9 +5,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from dotenv import load_dotenv
 
 import time
+import os
 
+load_dotenv()
 service = Service(ChromeDriverManager().install())
 options = Options()
 options.add_argument("--start-maximized")
@@ -36,7 +39,8 @@ try:
     email_field = wait.until(EC.visibility_of_element_located((By.ID, email_field_id)))
 
     print("Input email...")
-    email_field.send_keys("secretmail@gmail.com")
+    my_email = os.getenv("USER_EMAIL")
+    email_field.send_keys(my_email)
 
     # Freeze
     loader_xpath = "//span[contains(@class, 'StyledButtonLoader')]"
